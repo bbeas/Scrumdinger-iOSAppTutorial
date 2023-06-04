@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ScrumsView: View {
-    let scrums: [DailyScrum]
+    @Binding var scrums: [DailyScrum]
     var body: some View {
         NavigationStack {
             // list needs a way to identify individual items in the collection, it will use id by default
-            List(scrums) { scrum in
-                NavigationLink(destination: DetailView(scrum: scrum)) {
+            List($scrums) { $scrum in
+                NavigationLink(destination: DetailView(scrum: $scrum)) {
                     CardView(scrum: scrum)
                 }
                 .listRowBackground(scrum.theme.mainColor)
@@ -31,6 +31,7 @@ struct ScrumsView: View {
 
 struct ScrumsView_Previews: PreviewProvider {
     static var previews: some View {
-        ScrumsView(scrums: DailyScrum.sampleData)
+        // use a constant to create a binding to an immutable value (for preview only)
+        ScrumsView(scrums: .constant(DailyScrum.sampleData))
     }
 }

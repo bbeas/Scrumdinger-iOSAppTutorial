@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct DetailEditView: View {
+    @Binding var scrum: DailyScrum
     // @State defines the source of truth for value types
-    @State private var scrum = DailyScrum.emptyScrum
     @State private var newAttendeeName = ""
     var body: some View {
         Form {
@@ -25,6 +25,7 @@ struct DetailEditView: View {
                     Spacer()
                     Text("\(scrum.lengthInMinutes) minutes").accessibilityHidden(true)
                 }
+                ThemePicker(selection: $scrum.theme)
             }
             Section(header: Text("Attendees")) {
                 ForEach(scrum.attendees) { attendee in
@@ -54,6 +55,7 @@ struct DetailEditView: View {
 
 struct DetailEditView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailEditView()
+        // pass a constant binding to the initializer
+        DetailEditView(scrum: .constant(DailyScrum.sampleData[0]))
     }
 }
