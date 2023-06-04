@@ -8,10 +8,19 @@
 import Foundation
 
 struct DailyScrum: Identifiable {
-    var id: UUID
+    let id: UUID
     var title: String
     var attendees: [Attendee]
     var lengthInMinutes: Int
+    var lengthInMinutesAsDouble: Double {
+        get {
+            Double(lengthInMinutes) // returns the length of a scrum meeting as a double value
+        }
+        set {
+            lengthInMinutes = Int(newValue)
+        }
+    }
+
     var theme: Theme
 
     init(id: UUID = UUID(), title: String, attendees: [String], lengthInMinutes: Int, theme: Theme) {
@@ -32,6 +41,11 @@ extension DailyScrum {
             self.id = id
             self.name = name
         }
+    }
+
+    // returns an empty scrum
+    static var emptyScrum: DailyScrum {
+        DailyScrum(title: "", attendees: [], lengthInMinutes: 5, theme: .sky)
     }
 }
 
